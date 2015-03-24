@@ -90,7 +90,6 @@ ThreadFilterController = [
     ###
     this.check = (container) ->
       unless container?.message then return false
-      if container.message?.$orphan then return false # We don't want orphans
       if this.active()
         @match = !!viewFilter.filter([container.message], @_filters).length
       else
