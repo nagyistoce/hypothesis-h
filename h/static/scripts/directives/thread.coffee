@@ -132,7 +132,7 @@ ThreadController = [
     # thread filter attached to this thread, it will return true.
     ###
     this.matchesFilter = ->
-      return false if @container.message?.$orphan # We don't want orphans
+      return false if @container?.message?.$orphan # We don't want orphans
       if not @filter
         return true
       return @filter.check(@container)
