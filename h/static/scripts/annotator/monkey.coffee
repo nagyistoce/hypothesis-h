@@ -16,6 +16,8 @@ Annotator.prototype.setupAnnotation = (annotation) ->
   @selectedTargets = []
 
   annotation.anchors = []
+  hasOrphanTarget = false
+  hasAnchoredTarget = false
 
   for t in annotation.target ? []
     try
@@ -27,13 +29,18 @@ Annotator.prototype.setupAnnotation = (annotation) ->
       if anchor?
         t.diffHTML = anchor.diffHTML
         t.diffCaseOnly = anchor.diffCaseOnly
+        hasAnchoredTarget = true
+      else
+        hasOrphanTarget = true
 
     catch exception
       console.log "Error in setupAnnotation for", annotation.id,
         ":", exception.stack ? exception
 
-  annotation
+  if hasOrphanTarget and not hasAnchoredTarget
+    annotation.$orphan = true
 
+  annotation
 
 # Override deleteAnnotation to deal with anchors, not highlights.
 Annotator.prototype.deleteAnnotation = (annotation) ->

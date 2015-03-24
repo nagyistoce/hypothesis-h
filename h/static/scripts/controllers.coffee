@@ -236,6 +236,7 @@ class ViewerController
           params: annotation.$$tag
 
     $scope.shouldShowThread = (container) ->
+      return false if container.message.$orphan # We don't want orphans
       if annotationUI.hasSelectedAnnotations() and not container.parent.parent
         annotationUI.isAnnotationSelected(container.message?.id)
       else
